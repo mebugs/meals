@@ -1,0 +1,31 @@
+spring:
+  # static resouce for dev
+  mvc:
+    static-path-pattern: /uploads/**
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:D:/uploads/
+  datasource: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      max-lifetime: 30000
+      maximum-pool-size: 10
+      minimum-idle: 3
+    url: jdbc:mysql://localhost:3306/meal?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: meal
+    password: admin123
+    type: com.zaxxer.hikari.HikariDataSource
+  redis:
+    host: localhost
+    database: 0
+#mybatis
+mybatis-plus:
+  mapper-locations:
+  - classpath:mapper/**/*.xml
+# Logger Config
+logging:
+  level:
+    com.zh: debug
+# UPLOAD FOR DEV
+upload-path: D:/uploads
+base-back-path: http://localhost:8088/uploads
