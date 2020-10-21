@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 米虫先生/mebugs.com
- * @since 2020-10-12
+ * @since 2020-10-19
  */
 public interface ISysUserRoleService extends IService<SysUserRole> {
 

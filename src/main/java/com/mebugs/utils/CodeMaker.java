@@ -41,9 +41,7 @@ public class CodeMaker {
         strategyConfig.setInclude(
                 "sys_user",
                 "sys_role",
-                "sys_dept",
-                "sys_user_role",
-                "sys_user_dept"
+                "sys_user_role"
         );
         strategyConfig.setNaming(NamingStrategy.underline_to_camel)
                 .setColumnNaming(NamingStrategy.underline_to_camel)
