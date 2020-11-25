@@ -1,8 +1,8 @@
 package com.mebugs.security.handler;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.mebugs.data.response.R;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

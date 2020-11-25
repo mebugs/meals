@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ * 角色配置表
  * </p>
  *
  * @author 米虫先生/mebugs.com
@@ -30,7 +30,10 @@ public class SysRole implements Serializable {
      * 角色名
      */
     private String name;
-
+    /**
+     * 角色KEY
+     */
+    private String roleKey;
     /**
      * 备注
      */

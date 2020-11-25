@@ -33,3 +33,7 @@ logging:
 # UPLOAD FOR DEV
 upload-path: D:/uploads
 base-back-path: http://localhost:8088/uploads
+jwt:
+  secret: 'mebugsjwt'
+  header: Authorization
+  tokenHead: 'Bearer '

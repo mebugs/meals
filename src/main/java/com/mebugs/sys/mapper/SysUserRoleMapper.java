@@ -3,6 +3,8 @@ package com.mebugs.sys.mapper;
 import com.mebugs.sys.entity.SysUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 系统用户角色表 Mapper 接口
@@ -13,4 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
+    /**
+     * 查询用户角色清单 返回的是角色Key数组
+     * @param id
+     * @return
+     */
+    List<String> getUserRoles(Long id);
 }
