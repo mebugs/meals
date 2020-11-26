@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ExceptionHandler {
 
-    //切入点位置 只扫描业务路径
-    @Pointcut("execution(* com.mebugs.*.*.*.*(..))")
+    //切入点位置 只扫描sys和serv业务路径
+    @Pointcut("execution(* com.mebugs.sys.*.*.*(..)) || execution(* com.mebugs.serv.*.*.*(..)) ")
     public void pointCut(){}
 
     /**

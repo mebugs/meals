@@ -5,6 +5,7 @@ import com.mebugs.security.permission.RolePermission;
 import com.mebugs.security.utils.ResponseUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,12 @@ public class RoleInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
     }
-
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    }
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    }
     /**
      * 检查当前登录用户是否有权限
      * @param handler

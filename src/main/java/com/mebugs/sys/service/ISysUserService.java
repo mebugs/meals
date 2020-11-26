@@ -27,4 +27,11 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     JwtUser putJwtUser(Long id);
+
+    /**
+     * 登录
+     * @param sysUser
+     * @return
+     */
+    String login(SysUser sysUser);
 }

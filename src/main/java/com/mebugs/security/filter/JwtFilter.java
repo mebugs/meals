@@ -1,6 +1,5 @@
 package com.mebugs.security.filter;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mebugs.security.context.JwtUserContext;
 import com.mebugs.security.entity.JwtUser;
 import com.mebugs.security.utils.JwtUtils;
@@ -15,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * JWT过滤器
