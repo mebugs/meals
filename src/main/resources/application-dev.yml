@@ -1,3 +1,4 @@
+schema: meal
 spring:
   # static resouce for dev
   mvc:

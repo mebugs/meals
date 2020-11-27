@@ -19,5 +19,5 @@ public @interface RolePermission {
      * 角色KEY，如果是多个角色，用逗号分割
      * @return
      */
-    public String role() default "";
+    String roles() default "";
 }

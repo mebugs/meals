@@ -64,8 +64,9 @@ public class RoleInterceptor extends HandlerInterceptorAdapter {
             if (rolePermission == null) {
                 return true;
             }
+            String roles = rolePermission.roles();
             // 如果标记了注解，则判断权限
-            if (StringUtils.isNotBlank(rolePermission.role())) {
+            if (StringUtils.isNotBlank(roles)) {
                 //取出当前登录用户的角色清单 进入拦截器的且需要鉴权的一定已经存在了JwtUser
                 List<String> userRoles = JwtUserContext.getUser().getRoles();
                 //用户角色为空直接返回
@@ -74,7 +75,7 @@ public class RoleInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
                 //可能配置了多个角色
-                String[] needRoles = rolePermission.role().split(",");
+                String[] needRoles = roles.split(",");
                 for(String needRole : needRoles)
                 {
                     //只要任意角色成功匹配上返回TRUE
