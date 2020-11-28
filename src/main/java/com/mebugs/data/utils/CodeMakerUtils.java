@@ -42,7 +42,7 @@ public class CodeMakerUtils {
                 .setRestControllerStyle(true);
 
         final PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setParent(sysTableCodeConfig.getPackageName() + sysTableCodeConfig.getModuleName());
+        packageConfig.setParent(sysTableCodeConfig.getPackageName() +"."+ sysTableCodeConfig.getModuleName());
         // 自定义配置
         InjectionConfig cfg = new InjectionConfig() {
             @Override
