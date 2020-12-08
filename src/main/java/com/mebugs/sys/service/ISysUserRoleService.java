@@ -20,5 +20,19 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
      * @param id
      * @return
      */
-    List<String> getUserRoles(Long id);
+    List<String> getUserRoleKeys(Long id);
+
+    /**
+     * 更新角色清单
+     * @param id
+     * @param roles
+     */
+    void putUserRoles(Long id, List<Long> roles);
+
+    /**
+     * 获取用户角色ID
+     * @param id
+     * @return
+     */
+    List<Long> getUserRoleIds(Long id);
 }

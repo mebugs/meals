@@ -1,8 +1,12 @@
 package com.mebugs.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.mebugs.security.entity.JwtUser;
 import com.mebugs.sys.entity.SysUser;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mebugs.sys.to.UserDo;
+import com.mebugs.sys.vo.UserVo;
 
 /**
  * <p>
@@ -34,4 +38,26 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     String login(SysUser sysUser);
+
+    /**
+     * 保存账号数据 新增 修改 锁定 解锁 超管权限
+     * @param userDo
+     * @return
+     */
+    boolean saveOne(UserDo userDo);
+
+    /**
+     * 查询账号分页
+     * @param page
+     * @param userDo
+     * @return
+     */
+    IPage<UserVo> getPage(Page page, UserDo userDo);
+
+    /**
+     * 更具账号ID查询用户信息
+     * @param id
+     * @return
+     */
+    UserVo getUserInfo(Long id);
 }

@@ -1,10 +1,13 @@
 package com.mebugs.sys.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mebugs.data.response.R;
 import com.mebugs.security.context.JwtUserContext;
+import com.mebugs.security.permission.RolePermission;
 import com.mebugs.sys.entity.SysUser;
 import com.mebugs.sys.service.ISysUserService;
+import com.mebugs.sys.to.UserDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +50,40 @@ public class SysUserController {
     public R getUserBase()
     {
         return R.ok(JwtUserContext.getUser());
+    }
+
+    /**
+     * 保存账号数据 新增 修改 锁定 解锁 超管权限
+     * @param userDo
+     * @return
+     */
+    @RolePermission(roles="admin")
+    @PostMapping("/user/save")
+    public R saveOne(@RequestBody UserDo userDo){
+        return R.ok(sysUserService.saveOne(userDo));
+    }
+
+    /**
+     * 查询账号分页
+     * @param page
+     * @param userDo
+     * @return
+     */
+    @RolePermission(roles="admin")
+    @GetMapping("/user/page")
+    public R getPage(Page page, UserDo userDo){
+        return R.ok(sysUserService.getPage(page,userDo));
+    }
+
+    /**
+     * 更具账号ID查询用户信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/user/get")
+    public R getUserInfo(Long id)
+    {
+        return R.ok(sysUserService.getUserInfo(id));
     }
 }
 

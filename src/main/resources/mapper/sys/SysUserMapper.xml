@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mebugs.sys.mapper.SysUserMapper">
-
+    <select id="getPage" resultType="com.mebugs.sys.vo.UserVo">
+        SELECT
+            t.id,uris.role_str,t.`name`,t.`status`
+        FROM `sys_user` t
+        LEFT JOIN user_role_str uris ON uris.uid = t.id
+        <where>
+            <if test="userDo!=null and userDo.name!=null and userDo.name!=''">
+                AND t.`name` LIKE CONCAT('%',#{userDo.name},'%')
+            </if>
+            <if test="userDo!=null and userDo.status!=null and userDo.status!=''">
+                AND t.`status` = #{userDo.status}
+            </if>
+            <if test="userDo!=null and userDo.roleId!=null and userDo.roleId!=''">
+                AND t.id in (SELECT sr.uid FROM `sys_user_role` sr WHERE sr.rid = #{userDo.roleId})
+            </if>
+        </where>
+    </select>
 </mapper>

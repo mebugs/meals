@@ -1,6 +1,10 @@
 package com.mebugs.sys.controller;
 
 
+import com.mebugs.data.response.R;
+import com.mebugs.sys.service.ISysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sysRole")
 public class SysRoleController {
+    @Autowired
+    private ISysRoleService sysRoleService;
 
+    /**
+     * 查询全部角色供页面选择
+     * @return
+     */
+    @GetMapping("allList")
+    public R allList()
+    {
+        return R.ok(sysRoleService.list());
+    }
 }
 

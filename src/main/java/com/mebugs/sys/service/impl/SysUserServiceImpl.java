@@ -1,22 +1,24 @@
 package com.mebugs.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mebugs.data.cons.Constant;
 import com.mebugs.security.entity.JwtUser;
+import com.mebugs.security.utils.EncryptionUtils;
 import com.mebugs.security.utils.JwtUtils;
 import com.mebugs.sys.entity.SysUser;
 import com.mebugs.sys.mapper.SysUserMapper;
 import com.mebugs.sys.service.ISysUserRoleService;
 import com.mebugs.sys.service.ISysUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mebugs.sys.to.UserDo;
+import com.mebugs.sys.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -29,6 +31,8 @@ import java.util.List;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
+    @Autowired
+    private ISysUserService sysUserService;
     @Autowired
     private ISysUserRoleService sysUserRoleService;
     @Autowired
@@ -73,6 +77,62 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     /**
+     * 保存账号数据 新增 修改 锁定 解锁 超管权限
+     * @param userDo
+     * @return
+     */
+    @Override
+    public boolean saveOne(UserDo userDo) {
+        SysUser sysUser = new SysUser();
+        // 锁定或解锁的status字段会自动拷贝到sysUser对象
+        BeanUtils.copyProperties(userDo,sysUser);
+        if(userDo.getId()==null || userDo.getResetPwd()!=null)
+        {
+            //新增用户 数据库status默认值为1
+            //或触发密码重置操作
+            //创建密码 默认密码为账号+salt的加密值
+            String salt = EncryptionUtils.getSalt();
+            sysUser.setSalt(salt);
+            String pwd = EncryptionUtils.encode(userDo.getName()+salt);
+            sysUser.setPassword(pwd);
+        }
+        this.saveOrUpdate(sysUser);
+        if(userDo.getRoles()!=null && userDo.getRoles().size()>0)
+        {
+            //更新角色清单
+            sysUserRoleService.putUserRoles(sysUser.getId(),userDo.getRoles());
+        }
+        // 更新用户时触发缓存更新操作
+        sysUserService.putJwtUser(sysUser.getId());
+        return true;
+    }
+
+    /**
+     * 查询账号分页
+     * @param page
+     * @param userDo
+     * @return
+     */
+    @Override
+    public IPage<UserVo> getPage(Page page, UserDo userDo) {
+        return this.baseMapper.getPage(page,userDo);
+    }
+
+    /**
+     * 更具账号ID查询用户信息
+     * @param id
+     * @return
+     */
+    @Override
+    public UserVo getUserInfo(Long id) {
+        SysUser sysUser = this.getById(id);
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(sysUser,userVo);
+        userVo.setRoles(sysUserRoleService.getUserRoleIds(id));
+        return userVo;
+    }
+
+    /**
      * 从数据库获取安全用户信息
      * @param id
      * @return
@@ -88,7 +148,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         JwtUser jwtUser = new JwtUser();
         BeanUtils.copyProperties(sysUser,jwtUser);
         //查询用户角色清单
-        jwtUser.setRoles(sysUserRoleService.getUserRoles(id));
+        jwtUser.setRoles(sysUserRoleService.getUserRoleKeys(id));
         return jwtUser;
     }
 }

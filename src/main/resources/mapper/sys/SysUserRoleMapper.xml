@@ -6,4 +6,8 @@
         LEFT JOIN `sys_role` r ON ur.rid = r.id
         WHERE ur.uid = #{id}
     </select>
+    <select id="getUserRoleIds" resultType="java.lang.Long">
+        SELECT ur.rid FROM `sys_user_role` ur
+        WHERE ur.uid = #{id}
+    </select>
 </mapper>

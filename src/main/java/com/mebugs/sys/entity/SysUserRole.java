@@ -1,8 +1,11 @@
 package com.mebugs.sys.entity;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -21,6 +24,7 @@ public class SysUserRole implements Serializable {
     /**
      * 用户ID
      */
+    @TableId(value = "uid", type = IdType.INPUT)
     private Long uid;
 
     /**
