@@ -1,12 +1,20 @@
 # meal（一顿饭）
-如名所示意那样，减少一顿饭的时间消耗。
+如名所示意那样，减少一顿饭的时间消耗
+
 主要为了简化自身开发的基础脚手架（基于SpringBoot）
+
 本仓库不会包含过多的业务逻辑，方便快速铺开一个新业务系统，简化开发的基础脚手架（基于SpringBoot）
+
 meal采用了前后端分离的形式进行构建，本仓库为服务端仓库
+
 本仓库地址：
+
 meal（[gitee地址](https://gitee.com/mebugs/meal) [github地址](https://github.com/mebugs/meal)）
+
 前端仓库地址：
+
 meal-ui（[gitee地址](https://gitee.com/mebugs/meal-ui) [github地址](https://github.com/mebugs/meal-ui)）
+
 前端项目通过Vue+Vuex构建
 
 # 基本配置
