@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mebugs.data.cons.Constant;
+import com.mebugs.security.context.JwtUserContext;
 import com.mebugs.security.entity.JwtUser;
 import com.mebugs.security.utils.EncryptionUtils;
 import com.mebugs.security.utils.JwtUtils;
@@ -66,12 +67,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public String login(SysUser sysUser) {
         //根据账号密码查询未锁定的用户
-        SysUser query = this.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getName,sysUser.getName()).eq(SysUser::getPassword,sysUser.getPassword()).eq(SysUser::getStatus, Constant.USER_OPEN).last("limit 1"));
+        SysUser query = this.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getName,sysUser.getName()).eq(SysUser::getStatus, Constant.USER_OPEN).last("limit 1"));
         //账号未被锁定且匹配成功
         if(query!=null)
         {
-            //组装JWT数据 登陆时为了提升效率不对JwtUser进行封装 首次封装放在过滤器中完成
-            return jwtUtils.generateToken(query.getId());
+            //密码计算
+            String inputPwd = EncryptionUtils.encode(sysUser.getPassword()+query.getSalt());
+            if(query.getPassword().equals(inputPwd))
+            {
+                //组装JWT数据 登陆时为了提升效率不对JwtUser进行封装 首次封装放在过滤器中完成
+                return jwtUtils.generateToken(query.getId());
+            }
         }
         return null;
     }
@@ -102,7 +108,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             //更新角色清单
             sysUserRoleService.putUserRoles(sysUser.getId(),userDo.getRoles());
         }
-        // 更新用户时触发缓存更新操作
+        // 更新用户时触发缓存更新操作 姓名存在唯一索引
         sysUserService.putJwtUser(sysUser.getId());
         return true;
     }
@@ -130,6 +136,45 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanUtils.copyProperties(sysUser,userVo);
         userVo.setRoles(sysUserRoleService.getUserRoleIds(id));
         return userVo;
+    }
+
+    /**
+     * 获取自己的用户信息
+     * @return
+     */
+    @Override
+    public UserVo getMine() {
+        SysUser sysUser = this.getById(JwtUserContext.getUser().getId());
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(sysUser,userVo);
+        userVo.setRoleNames(sysUserRoleService.getUserRoleNames(JwtUserContext.getUser().getId()));
+        return userVo;
+    }
+
+    /**
+     * 用户自行修改密码
+     * @param nowPwd
+     * @param newPwd
+     * @return
+     */
+    @Override
+    public boolean resetPwd(String nowPwd, String newPwd) {
+        SysUser sysUser = this.getById(JwtUserContext.getUser().getId());
+        //验证旧密码
+        String inputPwd = EncryptionUtils.encode(nowPwd+sysUser.getSalt());
+        if(sysUser.getPassword().equals(inputPwd))
+        {
+            //密码验证通过
+            //修改密码
+            SysUser update = new SysUser();
+            update.setId(sysUser.getId());
+            String salt = EncryptionUtils.getSalt();
+            update.setSalt(salt);
+            String pwd = EncryptionUtils.encode(newPwd+salt);
+            update.setPassword(pwd);
+            return this.updateById(update);
+        }
+        return false;
     }
 
     /**

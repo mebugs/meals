@@ -61,4 +61,14 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public List<Long> getUserRoleIds(Long id) {
         return this.baseMapper.getUserRoleIds(id);
     }
+
+    /**
+     * 获取用户角色名称
+     * @param id
+     * @return
+     */
+    @Override
+    public List<String> getUserRoleNames(Long id) {
+        return this.baseMapper.getUserRoleNames(id);
+    }
 }

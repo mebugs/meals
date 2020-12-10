@@ -1,0 +1,29 @@
+schema: meal
+spring:
+  datasource: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      max-lifetime: 30000
+      maximum-pool-size: 10
+      minimum-idle: 3
+    url: jdbc:mysql://localhost:3306/meal?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: meal
+    password: admin123
+    type: com.zaxxer.hikari.HikariDataSource
+  redis:
+    host: localhost
+    database: 0
+#mybatis
+mybatis-plus:
+  mapper-locations:
+  - classpath:mapper/**/*.xml
+# Logger Config
+logging:
+  config:
+    #FOR PROD
+    classpath: logback-spring.xml
+jwt:
+  secret: 'mebugsjwt'
+  header: Authorization
+  tokenHead: 'Bearer '

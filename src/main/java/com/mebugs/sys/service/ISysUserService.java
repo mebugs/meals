@@ -60,4 +60,18 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     UserVo getUserInfo(Long id);
+
+    /**
+     * 获取自己的用户信息
+     * @return
+     */
+    UserVo getMine();
+
+    /**
+     * 用户自行修改密码
+     * @param nowPwd
+     * @param newPwd
+     * @return
+     */
+    boolean resetPwd(String nowPwd, String newPwd);
 }

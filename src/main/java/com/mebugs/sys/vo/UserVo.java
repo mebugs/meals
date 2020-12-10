@@ -45,5 +45,9 @@ public class UserVo implements Serializable {
      */
     private List<Long> roles;
 
+    /**
+     * 所属角色名单
+     */
+    private List<String> roleNames;
 
 }

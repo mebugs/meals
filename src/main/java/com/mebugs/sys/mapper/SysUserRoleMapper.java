@@ -27,4 +27,10 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      * @return
      */
     List<Long> getUserRoleIds(Long id);
+    /**
+     * 获取用户角色名称
+     * @param id
+     * @return
+     */
+    List<String> getUserRoleNames(Long id);
 }

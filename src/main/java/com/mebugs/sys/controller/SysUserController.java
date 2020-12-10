@@ -80,10 +80,31 @@ public class SysUserController {
      * @param id
      * @return
      */
+    @RolePermission(roles="admin")
     @GetMapping("/user/get")
     public R getUserInfo(Long id)
     {
         return R.ok(sysUserService.getUserInfo(id));
+    }
+
+    /**
+     * 获取自己的用户信息
+     * @return
+     */
+    @GetMapping("/user/getMine")
+    public R getMine(){
+        return R.ok(sysUserService.getMine());
+    }
+
+    /**
+     * 用户自行修改密码
+     * @param nowPwd
+     * @param newPwd
+     * @return
+     */
+    @GetMapping("/user/resetPwd")
+    public R resetPwd(String nowPwd,String newPwd){
+        return R.ok(sysUserService.resetPwd(nowPwd,newPwd));
     }
 }
 
