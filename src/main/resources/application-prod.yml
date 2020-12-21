@@ -1,4 +1,4 @@
-schema: meal
+schema: meals
 spring:
   datasource: 
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -7,8 +7,8 @@ spring:
       max-lifetime: 30000
       maximum-pool-size: 10
       minimum-idle: 3
-    url: jdbc:mysql://localhost:3306/meal?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
-    username: meal
+    url: jdbc:mysql://localhost:3306/meals?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: meals
     password: admin123
     type: com.zaxxer.hikari.HikariDataSource
   redis:
@@ -24,6 +24,6 @@ logging:
     #FOR PROD
     classpath: logback-spring.xml
 jwt:
-  secret: 'mebugsjwt'
+  secret: 'mealsjwt'
   header: Authorization
   tokenHead: 'Bearer '

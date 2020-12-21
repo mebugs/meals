@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mebugs.sys.mapper.SysUserMapper">
-    <select id="getPage" resultType="com.mebugs.sys.vo.UserVo">
+<mapper namespace="com.meals.sys.mapper.SysUserMapper">
+    <select id="getPage" resultType="com.meals.sys.vo.UserVo">
         SELECT
             t.id,uris.role_str,t.`name`,t.`status`
         FROM `sys_user` t
