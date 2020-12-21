@@ -28,7 +28,7 @@ public class SysTableCodeConfig {
     /**
      * 表名称
      */
-    private String tableName;
+    private String[] tableName;
 
     /**
      * 表备注
