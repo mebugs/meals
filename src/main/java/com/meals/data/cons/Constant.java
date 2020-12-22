@@ -49,4 +49,17 @@ public class Constant {
      * 通用 三级
      */
     public static final Integer LEVEL_THR = 3;
+
+    /**
+     * 权限集树类型 All全部 改变量可通用
+     */
+    public static final String ALL = "All";
+    /**
+     * 权限集树类型 Role角色
+     */
+    public static final String ROLE = "Role";
+    /**
+     * 权限集树类型 User用户
+     */
+    public static final String USER = "User";
 }

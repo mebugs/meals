@@ -1,8 +1,11 @@
 package com.meals.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -39,5 +42,15 @@ public class SysRole implements Serializable {
      */
     private String remark;
 
+    /**
+     * 已选择的权限ID
+     */
+    @TableField(exist = false)
+    private List<Long> authIds;
 
+    /**
+     * 已选择的权限树供页面展示
+     */
+    @TableField(exist = false)
+    private List<SysAuth> authTree;
 }

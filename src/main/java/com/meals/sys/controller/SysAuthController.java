@@ -31,7 +31,7 @@ public class SysAuthController {
     @GetMapping("allAuthTree")
     public R getAllAuthTree()
     {
-        return R.ok(sysAuthService.getAuthTree("All", Constant.LONG_ZERO,null));
+        return R.ok(sysAuthService.getAuthTree(Constant.ALL, Constant.LONG_ZERO,null));
     }
 }
 

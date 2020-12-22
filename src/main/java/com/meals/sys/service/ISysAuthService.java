@@ -30,4 +30,13 @@ public interface ISysAuthService extends IService<SysAuth> {
      * @return
      */
     List<SysAuth> getAuthTree(String type,Long id,List<Long> have);
+
+    /**
+     * 刷新权限树 入参同GET方法
+     * @param type
+     * @param id
+     * @param have
+     * @return
+     */
+    List<SysAuth> putAuthTree(String type,Long id,List<Long> have);
 }

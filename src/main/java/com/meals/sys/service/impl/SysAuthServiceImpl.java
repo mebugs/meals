@@ -7,6 +7,7 @@ import com.meals.sys.mapper.SysAuthMapper;
 import com.meals.sys.service.ISysAuthService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,18 @@ public class SysAuthServiceImpl extends ServiceImpl<SysAuthMapper, SysAuth> impl
         return getAuthTreeByFilter(have);
     }
 
+    /**
+     * 刷新权限树 入参同GET方法
+     * @param type
+     * @param id
+     * @param have
+     * @return
+     */
+    @CachePut(value="AuthTree",key="#id+'-'+#type")
+    @Override
+    public List<SysAuth> putAuthTree(String type, Long id, List<Long> have) {
+        return getAuthTreeByFilter(have);
+    }
 
     /**
      * 查询全部可用权限集
