@@ -1,6 +1,9 @@
 package com.meals.sys.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,6 +24,7 @@ public class SysUserAuth implements Serializable {
     /**
      * 用户ID
      */
+    @TableId(value = "id", type = IdType.INPUT)
     private Long uid;
 
     /**

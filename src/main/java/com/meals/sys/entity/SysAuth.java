@@ -1,7 +1,11 @@
 package com.meals.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,6 +26,7 @@ public class SysAuth implements Serializable {
     /**
      * ID
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
@@ -36,9 +41,13 @@ public class SysAuth implements Serializable {
     private String name;
 
     /**
-     * 授权等级 1菜单 2按钮 3元素
+     * 权限等级（当前类型下的等级）
      */
     private Integer level;
+    /**
+     * 权限类型 1菜单 2按钮/接口
+     */
+    private Integer type;
 
     /**
      * 父级ID（生成树）
@@ -50,5 +59,6 @@ public class SysAuth implements Serializable {
      */
     private Integer status;
 
-
+    @TableField(exist = false)
+    private List<SysAuth> children;
 }

@@ -2,6 +2,9 @@ package com.meals.sys.service;
 
 import com.meals.sys.entity.SysAuth;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysAuthService extends IService<SysAuth> {
 
+    /**
+     * 获取全部权限树 redis缓存方法
+     */
+    List<SysAuth> getAllAuth();
+
+    /**
+     * 获取权限树 接受三种传参
+     * 分别是全部权限树 角色的权限树 用户的权限树
+     * @param type all/role/user
+     * @param id 0/roleId/userId
+     * @param have null/roleAuths/userAuths
+     * @return
+     */
+    List<SysAuth> getAuthTree(String type,Long id,List<Long> have);
 }
