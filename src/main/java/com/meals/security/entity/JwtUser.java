@@ -20,4 +20,6 @@ public class JwtUser {
     private String name;
     //角色KEY数组 前端用于判断权限
     private List<String> roles;
+    //权限集KEY
+    private List<String> authKeys;
 }

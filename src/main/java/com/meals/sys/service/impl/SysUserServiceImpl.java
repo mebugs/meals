@@ -11,6 +11,7 @@ import com.meals.security.utils.EncryptionUtils;
 import com.meals.security.utils.JwtUtils;
 import com.meals.sys.entity.SysUser;
 import com.meals.sys.mapper.SysUserMapper;
+import com.meals.sys.service.ISysUserAuthService;
 import com.meals.sys.service.ISysUserRoleService;
 import com.meals.sys.service.ISysUserService;
 import com.meals.sys.to.UserDo;
@@ -38,6 +39,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private ISysUserRoleService sysUserRoleService;
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private ISysUserAuthService sysUserAuthService;
 
     /**
      * 获取安全用户信息 优先从Redis中获取 不存在则从数据获取
@@ -105,11 +108,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.saveOrUpdate(sysUser);
         if(userDo.getRoles()!=null && userDo.getRoles().size()>0)
         {
-            //更新角色清单
+            //更新角色清单 同时组装用户权限清单 发起线程刷新权限树和JWT缓存
             sysUserRoleService.putUserRoles(sysUser.getId(),userDo.getRoles());
         }
-        // 更新用户时触发缓存更新操作 姓名存在唯一索引
-        sysUserService.putJwtUser(sysUser.getId());
         return true;
     }
 
@@ -192,8 +193,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         JwtUser jwtUser = new JwtUser();
         BeanUtils.copyProperties(sysUser,jwtUser);
-        //查询用户角色清单
+        //查询用户角色清单 待移除
         jwtUser.setRoles(sysUserRoleService.getUserRoleKeys(id));
+        //查询用户准确权限集
+        jwtUser.setAuthKeys(sysUserAuthService.getUserAuthKeys(id));
         return jwtUser;
     }
 }

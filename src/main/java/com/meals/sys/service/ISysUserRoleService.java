@@ -30,6 +30,12 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
     void putUserRoles(Long id, List<Long> roles);
 
     /**
+     * 更新用户角色权限集
+     * @param id
+     */
+    void putUserRoleAuth(long id);
+
+    /**
      * 获取用户角色ID
      * @param id
      * @return
@@ -42,4 +48,17 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
      * @return
      */
     List<String> getUserRoleNames(Long id);
+
+    /**
+     * 获取当前角色下的用户ID
+     * @param roleId
+     * @return
+     */
+    List<Long> getRoleUserIds(Long roleId);
+
+    /**
+     * 清理某个角色的关联数据
+     * @param roleId
+     */
+    void cleanUserRole(Long roleId);
 }
