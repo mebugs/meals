@@ -27,15 +27,6 @@ public class SysAuthServiceImpl extends ServiceImpl<SysAuthMapper, SysAuth> impl
 
 
     /**
-     * 获取全部权限集 redis缓存方法
-     */
-    @Cacheable(value="AuthList",key="'All'")
-    @Override
-    public List<SysAuth> getAllAuth() {
-        return getAll();
-    }
-
-    /**
      * 获取权限树 接受三种传参
      * 分别是全部权限树 角色的权限树 用户的权限树
      * 缓存效果AuthTree0All AuthTree2Role AuthTree5User
@@ -71,15 +62,6 @@ public class SysAuthServiceImpl extends ServiceImpl<SysAuthMapper, SysAuth> impl
     @Override
     public void cleanAuthTree(String type, Long id) {
         //清空缓存 不需要任何代码
-    }
-
-    /**
-     * 查询全部可用权限集
-     * @return
-     */
-    private List<SysAuth> getAll()
-    {
-        return this.list(Wrappers.<SysAuth>lambdaQuery().eq(SysAuth::getStatus, Constant.USED));
     }
 
     /**

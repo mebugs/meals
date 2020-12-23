@@ -27,9 +27,9 @@ public class SysInitTask  implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args)  {
-        //执行全部权限集缓存
-        sysAuthService.getAllAuth();
-        //执行全部权限集树缓存
-        sysAuthService.getAuthTree("All", Constant.LONG_ZERO,null);
+        //执行全部权限集缓存 弃用
+        //sysAuthService.getAllAuth();
+        //启动PUT权限TREE
+        sysAuthService.putAuthTree("All", Constant.LONG_ZERO,null);
     }
 }

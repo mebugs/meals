@@ -16,10 +16,6 @@ import java.util.List;
  */
 public interface ISysAuthService extends IService<SysAuth> {
 
-    /**
-     * 获取全部权限树 redis缓存方法
-     */
-    List<SysAuth> getAllAuth();
 
     /**
      * 获取权限树 接受三种传参

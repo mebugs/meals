@@ -4,7 +4,7 @@ package com.meals.sys.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.meals.data.response.R;
 import com.meals.security.context.JwtUserContext;
-import com.meals.security.permission.RolePermission;
+import com.meals.security.permission.Authorize;
 import com.meals.sys.entity.SysUser;
 import com.meals.sys.service.ISysUserService;
 import com.meals.sys.to.UserDo;
@@ -53,11 +53,11 @@ public class SysUserController {
     }
 
     /**
-     * 保存账号数据 新增 修改 锁定 解锁 超管权限
+     * 保存账号数据 新增 修改 锁定 解锁
      * @param userDo
      * @return
      */
-    @RolePermission(roles="admin")
+    @Authorize("SYS-USER-M")
     @PostMapping("/user/save")
     public R saveOne(@RequestBody UserDo userDo){
         return R.ok(sysUserService.saveOne(userDo));
@@ -69,7 +69,7 @@ public class SysUserController {
      * @param userDo
      * @return
      */
-    @RolePermission(roles="admin")
+    @Authorize("SYS-USER-V")
     @GetMapping("/user/page")
     public R getPage(Page page, UserDo userDo){
         return R.ok(sysUserService.getPage(page,userDo));
@@ -80,7 +80,7 @@ public class SysUserController {
      * @param id
      * @return
      */
-    @RolePermission(roles="admin")
+    @Authorize("SYS-USER-M")
     @GetMapping("/user/get")
     public R getUserInfo(Long id)
     {
@@ -91,6 +91,7 @@ public class SysUserController {
      * 获取自己的用户信息
      * @return
      */
+    @Authorize("SYS-USER-P")
     @GetMapping("/user/getMine")
     public R getMine(){
         return R.ok(sysUserService.getMine());
@@ -102,6 +103,7 @@ public class SysUserController {
      * @param newPwd
      * @return
      */
+    @Authorize("SYS-USER-P")
     @GetMapping("/user/resetPwd")
     public R resetPwd(String nowPwd,String newPwd){
         return R.ok(sysUserService.resetPwd(nowPwd,newPwd));

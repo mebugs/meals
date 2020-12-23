@@ -1,7 +1,7 @@
 package com.meals.sys.controller;
 
 import com.meals.data.response.R;
-import com.meals.security.permission.RolePermission;
+import com.meals.security.permission.Authorize;
 import com.meals.sys.entity.SysTableCodeConfig;
 import com.meals.sys.service.SysCodeMakerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/code")
-//超级管理员和研发者可以操作 本控制器全部是此权限因此直接在类上配置
-@RolePermission(roles="admin,dev")
 public class CodeMakerController {
     @Autowired
     private SysCodeMakerService sysCodeMakerService;
@@ -27,6 +25,7 @@ public class CodeMakerController {
      * 获取数据库的所有表
      * @return
      */
+    @Authorize("DEV-CODE")
     @GetMapping("/getTableList")
     public R getTableList(String tableName) {
         return R.ok(sysCodeMakerService.findTableList(tableName));
@@ -37,6 +36,7 @@ public class CodeMakerController {
      * @param tableName
      * @return
      */
+    @Authorize("DEV-CODE-M")
     @GetMapping("/getTableColumnList")
     public R getTableColumnList(String tableName) {
         return R.ok(sysCodeMakerService.findColumnList(tableName));
@@ -47,6 +47,7 @@ public class CodeMakerController {
      * @param sysTableCodeConfig
      * @return
      */
+    @Authorize("DEV-CODE-M")
     @PostMapping("/make")
     public R makeCode(@RequestBody SysTableCodeConfig sysTableCodeConfig){
         return R.ok(sysCodeMakerService.makeCode(sysTableCodeConfig));

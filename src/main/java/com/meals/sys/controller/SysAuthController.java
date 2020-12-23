@@ -3,6 +3,7 @@ package com.meals.sys.controller;
 
 import com.meals.data.cons.Constant;
 import com.meals.data.response.R;
+import com.meals.security.permission.Authorize;
 import com.meals.sys.service.ISysAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class SysAuthController {
      * 查询全部权限集树数据
      * @return
      */
+    @Authorize("SYS-AUTH-V")
     @GetMapping("allAuthTree")
     public R getAllAuthTree()
     {

@@ -89,4 +89,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         threadAuthRole.syncRoleAuth(sysRole.getId(),changUserCache,false);
         return true;
     }
+    /**
+     * 删除角色
+     * @return
+     */
+    @Override
+    public boolean delRole(Long id) {
+        this.removeById(id);
+        //启动异步线程去刷新缓存
+        threadAuthRole.syncRoleAuth(id,true,true);
+        return true;
+    }
 }

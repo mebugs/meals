@@ -3,7 +3,7 @@ package com.meals.security.permission;
 import java.lang.annotation.*;
 
 /**
- * 自定义角色控制注解
+ * 自定义权限控制注解
  *
  * @author 米虫先生/mebugs.com
  * @since 2020-11-25
@@ -14,10 +14,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 // 是否生成注解文档
 @Documented
-public @interface RolePermission {
+public @interface Authorize {
     /**
-     * 角色KEY，如果是多个角色，用逗号分割
+     * 权限KEY，接口如果支持多个权限，逗号隔开
      * @return
      */
-    String roles() default "";
+    String value() default "";
 }

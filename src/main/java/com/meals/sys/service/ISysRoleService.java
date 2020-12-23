@@ -32,4 +32,10 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return
      */
     boolean saveOne(SysRole sysRole);
+
+    /**
+     * 删除角色
+     * @return
+     */
+    boolean delRole(Long id);
 }

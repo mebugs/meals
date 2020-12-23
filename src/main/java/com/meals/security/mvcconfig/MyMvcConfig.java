@@ -1,6 +1,6 @@
 package com.meals.security.mvcconfig;
 
-import com.meals.security.interceptor.RoleInterceptor;
+import com.meals.security.interceptor.AuthorizeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,7 +19,7 @@ public class MyMvcConfig  implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 角色校验拦截器配置
-        registry.addInterceptor(new RoleInterceptor()).addPathPatterns("/**");
+        // 权限校验拦截器配置
+        registry.addInterceptor(new AuthorizeInterceptor()).addPathPatterns("/**");
     }
 }

@@ -120,6 +120,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             //更新角色清单 同时组装用户权限清单 发起线程刷新权限树和JWT缓存
             sysUserRoleService.putUserRoles(sysUser.getId(),userDo.getRoles());
         }
+        //更新JWT用户缓存集
+        sysUserService.putJwtUser(sysUser.getId());
         return true;
     }
 

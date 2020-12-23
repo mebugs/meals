@@ -1,7 +1,7 @@
 package com.meals.security.interceptor;
 
 import com.meals.security.context.JwtUserContext;
-import com.meals.security.permission.RolePermission;
+import com.meals.security.permission.Authorize;
 import com.meals.security.utils.ResponseUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 角色拦截器
+ * 权限拦截器
  *
  * @author 米虫先生/mebugs.com
- * @since 2020-11-25
+ * @since 2020-12-23
  */
-public class RoleInterceptor extends HandlerInterceptorAdapter {
+public class AuthorizeInterceptor  extends HandlerInterceptorAdapter {
 
     /**
      * 拦截器前置处理逻辑
@@ -55,36 +55,36 @@ public class RoleInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // 获取方法上的注解
-            RolePermission rolePermission = handlerMethod.getMethod().getAnnotation(RolePermission.class);
+            Authorize authorize = handlerMethod.getMethod().getAnnotation(Authorize.class);
             // 如果方法上的注解为空 则获取类的注解
-            if (rolePermission == null) {
-                rolePermission = handlerMethod.getMethod().getDeclaringClass().getAnnotation(RolePermission.class);
+            if (authorize == null) {
+                authorize = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Authorize.class);
             }
             // 如果注解为null, 说明该方法或该类直接放行
-            if (rolePermission == null) {
+            if (authorize == null) {
                 return true;
             }
-            String roles = rolePermission.roles();
+            String authKeys = authorize.value();
             // 如果标记了注解，则判断权限
-            if (StringUtils.isNotBlank(roles)) {
-                //取出当前登录用户的角色清单 进入拦截器的且需要鉴权的一定已经存在了JwtUser
-                List<String> userRoles = JwtUserContext.getUser().getRoles();
+            if (StringUtils.isNotBlank(authKeys)) {
+                //取出当前登录用户的权限清单 进入拦截器的且需要鉴权的一定已经存在了JwtUser
+                List<String> userAuthKeys = JwtUserContext.getUser().getAuthKeys();
                 //用户角色为空直接返回
-                if(userRoles==null||userRoles.size()<1)
+                if(userAuthKeys==null||userAuthKeys.size()<1)
                 {
                     return false;
                 }
                 //可能配置了多个角色
-                String[] needRoles = roles.split(",");
-                for(String needRole : needRoles)
+                String[] needAuthKeys = authKeys.split(",");
+                for(String needKey : needAuthKeys)
                 {
-                    //只要任意角色成功匹配上返回TRUE
-                    if(userRoles.contains(needRole))
+                    //只要任意权限成功匹配上返回TRUE
+                    if(userAuthKeys.contains(needKey))
                     {
                         return true;
                     }
                 }
-                //循环完毕也为匹配上
+                //循环完毕也未匹配上
                 return false;
             }
         }

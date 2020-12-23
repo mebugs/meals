@@ -1,14 +1,16 @@
 package com.meals.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.meals.data.cons.Constant;
+import com.meals.security.permission.Authorize;
 import com.meals.sys.entity.SysRole;
 import com.meals.sys.entity.SysUserRole;
 import com.meals.sys.mapper.SysUserRoleMapper;
+import com.meals.sys.service.ISysAuthService;
 import com.meals.sys.service.ISysRoleAuthService;
 import com.meals.sys.service.ISysUserAuthService;
 import com.meals.sys.service.ISysUserRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.meals.task.thread.ThreadAuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +33,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Autowired
     private ISysRoleAuthService sysRoleAuthService;
     @Autowired
-    private ThreadAuthUser threadAuthUser;
-    @Autowired
     private ISysUserAuthService sysUserAuthService;
+    @Autowired
+    private ISysAuthService sysAuthService;
+
     /**
      * 查询用户角色清单 返回的是角色Key数组
      * @param id
@@ -73,8 +76,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         List<Long> userAuthIds = authIds.stream().distinct().collect(Collectors.toList());
         //刷新用户权限集
         sysUserAuthService.updateUserAuth(id,userAuthIds);
-        //启动用户权限树和JWT权限集缓存
-        threadAuthUser.syncUserAuth(id);
+        //更新用户权限树缓存
+        sysAuthService.putAuthTree(Constant.USER,id,userAuthIds);
     }
 
     /**
@@ -82,7 +85,6 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      * @param id
      */
     @Override
-    @Transactional
     public void putUserRoleAuth(long id) {
         //提取用户角色清单
         List<Long> roles = getUserRoleIds(id);
