@@ -6,6 +6,7 @@ import com.meals.sys.mapper.SysUserAuthMapper;
 import com.meals.sys.service.ISysUserAuthService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class SysUserAuthServiceImpl extends ServiceImpl<SysUserAuthMapper, SysUs
      * @param userAuthIds
      */
     @Override
+    @Transactional
     public void updateUserAuth(Long id, List<Long> userAuthIds) {
         this.remove(Wrappers.<SysUserAuth>lambdaQuery().eq(SysUserAuth::getUid,id));
         List<SysUserAuth> newAuth = new ArrayList<>();

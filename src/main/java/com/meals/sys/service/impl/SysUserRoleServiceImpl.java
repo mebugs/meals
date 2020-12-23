@@ -1,6 +1,7 @@
 package com.meals.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.meals.sys.entity.SysRole;
 import com.meals.sys.entity.SysUserRole;
 import com.meals.sys.mapper.SysUserRoleMapper;
 import com.meals.sys.service.ISysRoleAuthService;
@@ -10,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.meals.task.thread.ThreadAuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      * @param roles
      */
     @Override
+    @Transactional
     public void putUserRoles(Long id, List<Long> roles) {
         //删除当前用户角色
         this.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUid,id));
@@ -79,6 +82,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      * @param id
      */
     @Override
+    @Transactional
     public void putUserRoleAuth(long id) {
         //提取用户角色清单
         List<Long> roles = getUserRoleIds(id);
@@ -106,13 +110,13 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     /**
-     * 获取用户角色名称
+     * 获取用户角色对象
      * @param id
      * @return
      */
     @Override
-    public List<String> getUserRoleNames(Long id) {
-        return this.baseMapper.getUserRoleNames(id);
+    public List<SysRole> getUserRoleObj(Long id) {
+        return this.baseMapper.getUserRoleObj(id);
     }
 
     /**

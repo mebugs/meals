@@ -6,6 +6,7 @@ import com.meals.sys.mapper.SysRoleAuthMapper;
 import com.meals.sys.service.ISysRoleAuthService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class SysRoleAuthServiceImpl extends ServiceImpl<SysRoleAuthMapper, SysRo
      * @param authIds
      */
     @Override
+    @Transactional
     public void updateRoleAuth(Long id, List<Long> authIds) {
         this.remove(Wrappers.<SysRoleAuth>lambdaQuery().eq(SysRoleAuth::getRid,id));
         List<SysRoleAuth> newAuth = new ArrayList<>();

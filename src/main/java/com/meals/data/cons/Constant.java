@@ -62,4 +62,8 @@ public class Constant {
      * 权限集树类型 User用户
      */
     public static final String USER = "User";
+    /**
+     * 全部权限
+     */
+    public static final String ALL_AUTH = "全部权限";
 }

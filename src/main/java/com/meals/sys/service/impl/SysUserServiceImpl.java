@@ -9,18 +9,22 @@ import com.meals.security.context.JwtUserContext;
 import com.meals.security.entity.JwtUser;
 import com.meals.security.utils.EncryptionUtils;
 import com.meals.security.utils.JwtUtils;
+import com.meals.sys.entity.SysRole;
 import com.meals.sys.entity.SysUser;
 import com.meals.sys.mapper.SysUserMapper;
-import com.meals.sys.service.ISysUserAuthService;
-import com.meals.sys.service.ISysUserRoleService;
-import com.meals.sys.service.ISysUserService;
+import com.meals.sys.service.*;
 import com.meals.sys.to.UserDo;
+import com.meals.sys.vo.UserAuthVo;
 import com.meals.sys.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -36,11 +40,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private ISysUserService sysUserService;
     @Autowired
+    private ISysRoleAuthService sysRoleAuthService;
+    @Autowired
     private ISysUserRoleService sysUserRoleService;
     @Autowired
     private JwtUtils jwtUtils;
     @Autowired
     private ISysUserAuthService sysUserAuthService;
+    @Autowired
+    private ISysAuthService sysAuthService;
 
     /**
      * 获取安全用户信息 优先从Redis中获取 不存在则从数据获取
@@ -91,6 +99,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @return
      */
     @Override
+    @Transactional
     public boolean saveOne(UserDo userDo) {
         SysUser sysUser = new SysUser();
         // 锁定或解锁的status字段会自动拷贝到sysUser对象
@@ -145,10 +154,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public UserVo getMine() {
-        SysUser sysUser = this.getById(JwtUserContext.getUser().getId());
+        Long userId = JwtUserContext.getUser().getId();
+        SysUser sysUser = this.getById(userId);
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(sysUser,userVo);
-        userVo.setRoleNames(sysUserRoleService.getUserRoleNames(JwtUserContext.getUser().getId()));
+        List<UserAuthVo> allAuthTree = new ArrayList<>();
+        //获取我的权限集
+        List<Long> myAuthIds = sysUserAuthService.getUserAuthIds(userId);
+        //获取用户权限集
+        UserAuthVo myAuth = new UserAuthVo(Constant.ALL_AUTH,sysAuthService.getAuthTree(Constant.USER,userId,myAuthIds));
+        allAuthTree.add(myAuth);
+        //获取用户各角色权限集
+        List<SysRole> myRoles = sysUserRoleService.getUserRoleObj(userId);
+        for(SysRole role : myRoles)
+        {
+            //提取该角色的权限清单
+            List<Long> roleAuthIds = sysRoleAuthService.getRoleAuthIds(role.getId());
+            UserAuthVo roleAuth = new UserAuthVo(role.getName(),sysAuthService.getAuthTree(Constant.ROLE,role.getId(),roleAuthIds));
+            allAuthTree.add(roleAuth);
+        }
+        userVo.setUserAuthVos(allAuthTree);
         return userVo;
     }
 

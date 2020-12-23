@@ -10,8 +10,8 @@
         SELECT ur.rid FROM `sys_user_role` ur
         WHERE ur.uid = #{id}
     </select>
-    <select id="getUserRoleNames" resultType="java.lang.String">
-        SELECT r.name FROM `sys_user_role` ur
+    <select id="getUserRoleObj" resultType="com.meals.sys.entity.SysRole">
+        SELECT r.name,r.id FROM `sys_user_role` ur
         LEFT JOIN `sys_role` r ON ur.rid = r.id
         WHERE ur.uid = #{id}
     </select>

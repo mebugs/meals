@@ -1,5 +1,6 @@
 package com.meals.sys.mapper;
 
+import com.meals.sys.entity.SysRole;
 import com.meals.sys.entity.SysUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -28,11 +29,11 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      */
     List<Long> getUserRoleIds(Long id);
     /**
-     * 获取用户角色名称
+     * 获取用户角色
      * @param id
      * @return
      */
-    List<String> getUserRoleNames(Long id);
+    List<SysRole> getUserRoleObj(Long id);
     /**
      * 获取当前角色下的用户ID
      * @param roleId
