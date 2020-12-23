@@ -12,6 +12,7 @@ import com.meals.sys.service.ISysAuthService;
 import com.meals.sys.service.ISysRoleAuthService;
 import com.meals.sys.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.meals.task.thread.ThreadAuthRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private ISysRoleAuthService sysRoleAuthService;
     @Autowired
     private ISysAuthService sysAuthService;
+    @Autowired
+    private ThreadAuthRole threadAuthRole;
+
 
     /**
      * 获取角色分页
@@ -65,5 +69,24 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             return role;
         }
         return null;
+    }
+
+    /**
+     * 保存角色数据 新增修改通用方法
+     * @return
+     */
+    @Override
+    public boolean saveOne(SysRole sysRole) {
+        boolean changUserCache = false;
+        if(sysRole.getId() != null) {
+            //表示需要同步刷新相关用户的缓存信息
+            changUserCache = true;
+        }
+        this.saveOrUpdate(sysRole);
+        //无论新增还是修改先保存主表 再提交关联表
+        sysRoleAuthService.updateRoleAuth(sysRole.getId(),sysRole.getAuthIds());
+        //启动异步线程去刷新缓存
+        threadAuthRole.syncRoleAuth(sysRole.getId(),changUserCache,false);
+        return true;
     }
 }

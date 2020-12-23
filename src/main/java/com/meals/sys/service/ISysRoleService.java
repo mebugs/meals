@@ -26,4 +26,10 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return
      */
     SysRole getRoleInfo(Long id);
+
+    /**
+     * 保存角色数据 新增修改通用方法
+     * @return
+     */
+    boolean saveOne(SysRole sysRole);
 }

@@ -58,12 +58,12 @@ public class SysRoleController {
     }
 
     /**
-     * 保存角色数据
+     * 保存角色数据 新增修改通用方法
      * @return
      */
     @PostMapping("save")
     public R saveOne(@RequestBody SysRole sysRole){
-        return R.ok();
+        return R.ok(sysRoleService.saveOne(sysRole));
     }
 }
 

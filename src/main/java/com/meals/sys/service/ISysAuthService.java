@@ -39,4 +39,11 @@ public interface ISysAuthService extends IService<SysAuth> {
      * @return
      */
     List<SysAuth> putAuthTree(String type,Long id,List<Long> have);
+
+    /**
+     * 清空某个角色或用户的权限树  入参同GET方法
+     * @param type
+     * @param id
+     */
+    void cleanAuthTree(String type,Long id);
 }

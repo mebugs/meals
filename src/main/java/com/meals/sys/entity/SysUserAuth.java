@@ -24,7 +24,7 @@ public class SysUserAuth implements Serializable {
     /**
      * 用户ID
      */
-    @TableId(value = "id", type = IdType.INPUT)
+    @TableId(value = "uid", type = IdType.INPUT)
     private Long uid;
 
     /**

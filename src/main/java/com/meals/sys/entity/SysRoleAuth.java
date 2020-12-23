@@ -24,7 +24,7 @@ public class SysRoleAuth implements Serializable {
     /**
      * 角色ID
      */
-    @TableId(value = "id", type = IdType.INPUT)
+    @TableId(value = "rid", type = IdType.INPUT)
     private Long rid;
 
     /**

@@ -21,4 +21,11 @@ public interface ISysRoleAuthService extends IService<SysRoleAuth> {
      * @return
      */
     List<Long> getRoleAuthIds(Long id);
+
+    /**
+     * 先删除当前ID下的权限集 然后批量刷入新的权限集
+     * @param id
+     * @param authIds
+     */
+    void updateRoleAuth(Long id, List<Long> authIds);
 }
