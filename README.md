@@ -30,36 +30,36 @@ Meal'S工程仅提供了最基本的账号-角色-权限集支撑能力，没有
 
 ## 登陆页
 
-![](/blog/upload/post/POST_1613638188.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638188.jpg)
 
 ## 工作中心
 
-![](/blog/upload/post/POST_1613639826.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613639826.jpg)
 
 ## 个人中心
 
-![](/blog/upload/post/POST_1613638233.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638233.jpg)
 
 ## 账号管理
 
-![](/blog/upload/post/POST_1613638247.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638247.jpg)
 
 ## 角色管理
 
-![](/blog/upload/post/POST_1613638301.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638301.jpg)
 
-![](/blog/upload/post/POST_1613638311.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638311.jpg)
 
 ## 权限集查看
 
-![](/blog/upload/post/POST_1613638354.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638354.jpg)
 
 
 ## 代码生成
 
-![](/blog/upload/post/POST_1613638325.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638325.jpg)
 
-![](/blog/upload/post/POST_1613638372.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638372.jpg)
 
 
 # 开发说明
@@ -80,11 +80,11 @@ Meal'S才用了Redis作为默认缓存工具，为了提升鉴权和查询性能
 
 设置缓存的主要目的用于降低数据库查询压力，尤其是查询权限树时，需要组装树形结构。
 
-![](/blog/upload/post/POST_1613638634.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613638634.jpg)
 
 ### 工程目录
 
-![](/blog/upload/post/POST_1613639006.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613639006.jpg)
 
 ### 核心类
 
@@ -107,7 +107,7 @@ Meal'S才用了Redis作为默认缓存工具，为了提升鉴权和查询性能
 3. 启动App类
 
 启动示意图：
-![](/blog/upload/post/POST_1613639279.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613639279.jpg)
 
 ## 前端
 ### 外部依赖
@@ -119,9 +119,9 @@ Meal'S才用了Redis作为默认缓存工具，为了提升鉴权和查询性能
 
 因为Meals-ui和Meal-ui的工程目录结构没有产生变动，因此此处直接引用了Meal-ui的工程目录结构图。
 
-![](/blog/upload/post/POST_1613615776.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613615776.jpg)
 
-![](/blog/upload/post/POST_1613615784.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613615784.jpg)
 
 ### 相对原本的改动
 
@@ -148,7 +148,7 @@ Meal'S才用了Redis作为默认缓存工具，为了提升鉴权和查询性能
 
 ### 启动界面
 
-![](/blog/upload/post/POST_1613616164.jpg)
+![](https://www.mebugs.com/ /blog/upload/post/POST_1613616164.jpg)
 
 ### 开发说明
 
