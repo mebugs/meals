@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 角色权限集缓存更新线程池
+ * 角色权限集缓存清理线程池
  *
  * @author mebugs.com/米虫先生
  * @since 2020-12-23

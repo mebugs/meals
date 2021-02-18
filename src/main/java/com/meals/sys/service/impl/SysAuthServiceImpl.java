@@ -35,7 +35,7 @@ public class SysAuthServiceImpl extends ServiceImpl<SysAuthMapper, SysAuth> impl
      * @param have null/roleAuths/userAuths
      * @return
      */
-    @Cacheable(value="AuthTree",key="#id+'-'+#type")
+    @Cacheable(value="MealsAuthTree",key="#id+'-'+#type")
     @Override
     public List<SysAuth> getAuthTree(String type, Long id, List<Long> have) {
         return getAuthTreeByFilter(have);
@@ -48,7 +48,7 @@ public class SysAuthServiceImpl extends ServiceImpl<SysAuthMapper, SysAuth> impl
      * @param have
      * @return
      */
-    @CachePut(value="AuthTree",key="#id+'-'+#type")
+    @CachePut(value="MealsAuthTree",key="#id+'-'+#type")
     @Override
     public List<SysAuth> putAuthTree(String type, Long id, List<Long> have) {
         return getAuthTreeByFilter(have);
@@ -58,7 +58,7 @@ public class SysAuthServiceImpl extends ServiceImpl<SysAuthMapper, SysAuth> impl
      * @param type
      * @param id
      */
-    @CacheEvict(value="AuthTree",key="#id+'-'+#type")
+    @CacheEvict(value="MealsAuthTree",key="#id+'-'+#type")
     @Override
     public void cleanAuthTree(String type, Long id) {
         //清空缓存 不需要任何代码

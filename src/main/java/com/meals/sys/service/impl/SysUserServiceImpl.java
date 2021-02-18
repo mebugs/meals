@@ -55,7 +55,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @param id
      * @return
      */
-    @Cacheable(value="jwtUser",key="#id")
+    @Cacheable(value="MealsJwtUser",key="#id")
     @Override
     public JwtUser getJwtUser(Long id) {
         return getJwtUserFromDb(id);
@@ -66,7 +66,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @param id
      * @return
      */
-    @CachePut(value="jwtUser",key="#id")
+    @CachePut(value="MealsJwtUser",key="#id")
     @Override
     public JwtUser putJwtUser(Long id) {return getJwtUserFromDb(id);}
 

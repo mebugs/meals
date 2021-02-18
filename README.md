@@ -1,68 +1,166 @@
-# 前言
-meals是meal工程的增强版本，不再仅仅通过角色进行授权控制，而是细分到具体的菜单、按钮、元素的权限配置。
+# 基本信息
 
-关于meal:
+Meal'S是对Meal工程的增强版。
 
-meal（[gitee地址](https://gitee.com/mebugs/meal) [github地址](https://github.com/mebugs/meal)）
+Meal'S依旧不会包含过多的业务逻辑，提供用户-角色-权限集的基础管理能力。
 
-meal-ui（[gitee地址](https://gitee.com/mebugs/meal-ui) [github地址](https://github.com/mebugs/meal-ui)）
+Meal'S可以实现自定义角色并为角色自由赋予权限，最终用户所具备的权限集是其所选择的角色权限集的并集。
 
-# meals
-meals（就餐时光），主要对业务系统基础的用户-角色-权限-授权支撑体系进行构建，减少新业务系统搭建的时间。
+Meal'S工程为了提升效率设置了相对科学的缓存命名空间，下文中会详细说明。
 
-meals不会包含过多的业务逻辑，主要为了方便快速铺开一个新业务系统，简化开发的基础脚手架（基于SpringBoot）。
+服务端工程地址：[Gitee](https://gitee.com/mebugs/meals "Gitee") [GitHub](https://github.com/mebugs/meals "GitHub")
 
-meals采用了前后端分离的形式进行构建，本仓库为服务端仓库。
+前端工程地址：[Gitee](https://gitee.com/mebugs/meals-ui "Gitee") [GitHub](https://github.com/mebugs/meals-ui "GitHub")
 
-本仓库地址：
+## 特别致谢
 
-meals（[gitee地址](https://gitee.com/mebugs/meals) [github地址](https://github.com/mebugs/meals)）
+Meal'S服务端使用[MyBatis-Plus](https://mybatis.plus/ "MyBatis-Plus")作为基础脚手架。
 
-前端仓库地址：
+Meal'S服务端使用[jjwt](https://github.com/jwtk/jjwt "jjwt")实现JWT快速加解密。
 
-meals-ui（[gitee地址](https://gitee.com/mebugs/meals-ui) [github地址](https://github.com/mebugs/meals-ui)）
+Meal'S-ui前端工程Fork自[vue-admin-template](https://github.com/PanJiaChen/vue-admin-template "vue-admin-template")。
 
-前端项目通过Vue+Vuex构建。
+本人是JAVA服务端开发，[@花裤衩](https://github.com/PanJiaChen "@花裤衩")的前端系列开源项目为我学习Vue提供非常大的帮助，非常感谢！
 
-meals-ui通过动态路由以及自定义指令和公共授权方法实现页面的权限管理与维护。
+# 功能清单
 
-# 基本配置
- - JDK 1.8 已知可能持续使用很长时间的版本
- - MySql 5.7 经典版本
- - Redis 6.0 比较新的一个版本（实际上目前项目中对版本要求没有十分严格）
+Meal'S工程仅提供了最基本的账号-角色-权限集支撑能力，没有涉及其他功能页面。
 
-# 主要涉及的第三方框架或插件
- - springboot 2.3.3 为未来构建SpringCloud提供基础
- - mybatis-plus 3.4.0 国内最棒的JAVA开源脚手架（基于MyBatise）
- - jjwt 0.9.1 快速构建JWT鉴权的插件包
+为了提供更为友好的体验，提供了账号查看自身权限集的能力。
 
-# 基本能力
-**本工程基于meal继续开发，部分已有能力不再此处赘述**
- - 增加权限集管理，提供权限集的界面配置能力
- - 增加角色管理，可以自定义角色，角色不再仅仅是预置
- - 增加角色权限集关联，可以为角色自由配置权限集
- - 支持账号多选角色，同时增加账号权限集查询，可以看到当前账号具备的权限清单
+## 登陆页
 
-# 关键类说明
- - RedisConfig 封装Redis常用方法，继承CachingConfigurerSupport实现缓存能力（用于支持Cacheable、CachePut注解快速缓存）
- - MyBatisPlusConfig MyBatisPlus插件配置类（按照最新版本适配）
- - ExceptionHandler 通过AOP实现全局异常捕获后进行标准格式体返回（支持自定义异常）
- - JwtFilter JWT登录校验过滤器
- - JwtUserContext 登录用户上下文，主体数据存于Redis，在JwtFilter中提取存入（ThreadLocal）
- - MyMvcConfig SpringBoot 2.0后添加校验器需要继承WebMvcConfigurer（addInterceptors）
- - @Authorize 自定义注解（修订自meal的@RolePermission），权限检验（注解于方法或类上）
- - AuthorizeInterceptor 权限拦截器（修订自meal的RoleInterceptor），配合自定义注解实现角色访问接口拦截
+![](/blog/upload/post/POST_1613638188.jpg)
 
-# 启动说明
-1. MySql启动并刷库，新建数据库meals（如果改名，请修改application-dev.yml中的配置文件，数据可用户名和密码自行配置）
-2. Redis数据库需要优先启动，工程中默认配置在localhost（如果是外部redis，请修改application-dev.yml中的配置文件）
-3. 通过App类启动服务端项目（本工程打包配置的是jar包，可在pom.xml中自行修改）
-4. 前端启动移步 meals-ui
+## 工作中心
 
-# 前端仓库地址
+![](/blog/upload/post/POST_1613639826.jpg)
 
-meals-ui（[gitee地址](https://gitee.com/mebugs/meals-ui) [github地址](https://github.com/mebugs/meals-ui)）
+## 个人中心
 
-前端项目通过Vue+Vuex构建。
+![](/blog/upload/post/POST_1613638233.jpg)
 
-meals-ui通过动态路由以及自定义指令和公共授权方法实现页面的权限管理与维护。
+## 账号管理
+
+![](/blog/upload/post/POST_1613638247.jpg)
+
+## 角色管理
+
+![](/blog/upload/post/POST_1613638301.jpg)
+
+![](/blog/upload/post/POST_1613638311.jpg)
+
+## 权限集查看
+
+![](/blog/upload/post/POST_1613638354.jpg)
+
+
+## 代码生成
+
+![](/blog/upload/post/POST_1613638325.jpg)
+
+![](/blog/upload/post/POST_1613638372.jpg)
+
+
+# 开发说明
+## 服务端
+### 外部依赖
+
+1. JDK 1.8 已知可能持续使用很长时间的版本
+2. MySql 5.7 经典版本
+3. Redis 6.0 比较新的一个版本（实际上目前项目中对版本要求没有十分严格）
+
+### 基本缓存结构说明
+
+Meal'S才用了Redis作为默认缓存工具，为了提升鉴权和查询性能，主要实现两大缓存。
+
+权限树缓存：用于界面渲染树形结构。
+
+权限集缓存：用户服务端接口鉴权。
+
+设置缓存的主要目的用于降低数据库查询压力，尤其是查询权限树时，需要组装树形结构。
+
+![](/blog/upload/post/POST_1613638634.jpg)
+
+### 工程目录
+
+![](/blog/upload/post/POST_1613639006.jpg)
+
+### 核心类
+
+ - MyBatisPlusConfig：MyBatis-Plus配置类，配置Mapper扫描位置、分页插件等。
+ - RedisConfig：配置Redis为默认缓存工具及常见操作Bean配置。
+ - CodeMakerUtils：代码生成器的执行类
+ - JwtUserContext：JWT安全用户上下文对象（全局获取登录用户信息）
+ - JwtFilter：Jwt过滤器，核心过滤器（登录、授权、拦截）
+ - ExceptionHandler：全局异常捕获处理（AOP实现，支持自定义异常处理）
+ - AuthorizeInterceptor：权限拦截器（基于自定义注解@Authorize实现鉴权）
+ - EncryptionUtils：盐值加密工具（账号的密码生成，不可逆加密算法）
+ - SysInitTask：系统启动任务（当前主要缓存全部权限树）
+ - ThreadAuthRole：角色权限变动线程（根据变动的角色ID更新角色、涉及用户权限相关缓存）
+ - ThreadPoolConfig：基于Spring的线程池配置
+
+### 开发说明
+
+1. 数据库初始化刷库
+2. application-dev.yml配置您的数据库信息和redis信息（默认localhost）
+3. 启动App类
+
+启动示意图：
+![](/blog/upload/post/POST_1613639279.jpg)
+
+## 前端
+### 外部依赖
+
+1. Node.js（基本工具）
+2. Git（多数前端工程依赖会需要调用Git下载）
+
+### 工程目录
+
+因为Meals-ui和Meal-ui的工程目录结构没有产生变动，因此此处直接引用了Meal-ui的工程目录结构图。
+
+![](/blog/upload/post/POST_1613615776.jpg)
+
+![](/blog/upload/post/POST_1613615784.jpg)
+
+### 相对原本的改动
+
+1. 移除Mocks模拟返回服务（调用meal服务端工程）
+2. 移除测试模块以及相关依赖
+3. 移除Cookies插件依赖，Cookies统一替换为window.localStorage
+4. 补充动态路由由服务端返回的用户角色集Roles控制
+5. 移除自定义icon（svg格式），替换为element-ui的图标，直接修改了Sidebar/Item.vue
+6. 核心方法getUserBase获取用户基础信息src/store/modules/user.js getInfo()
+7. 增加v-droll可以自由在屏幕范围内拖动弹窗（src/directive/droll.js）
+
+以下为Meals-ui基于Meal-ui增加的主要改动。
+
+1. 增加自定义指令v-authorize判断界面按钮菜单是否具备权限
+2. 修改路由rolse为auth（路由指定唯一auth标示需要的权限）
+3. 代码生成器增强，支持模糊查询表名，支持多选生成代码
+4. 对原本的element-ui主题配色进行了修改
+
+```html
+<!-- v-authorize使用方式 -->
+<button type="button" v-authorize="'SYS-USER-M'" />
+```
+
+
+### 启动界面
+
+![](/blog/upload/post/POST_1613616164.jpg)
+
+### 开发说明
+
+```bash
+# 依赖下载
+npm install
+# 开发模式
+npm run dev
+# 生产编译
+npm run build
+```
+
+# 关于个人
+
+[关于米虫先生](http://www.mebugs.com/some/about.html "关于米虫先生")
